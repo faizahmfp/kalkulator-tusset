@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Tusset Ag</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+  body {
+    font-family:"Poppins",system-ui,Arial,sans-serif;
+    background: #ffffff;
+    color: #112876;
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  h1 { color: #112876; font-size: 1.4rem; margin-top: 10px; margin-bottom: -15px;}
+  .kartu {
+    background: #f7c26682;
+    border: 0px solid #D5DBE6;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  label { display: block; font-size: 0.85rem; color: #112876; margin-top: 10px; }
+  input {
+    width: 95%;
+    font-size: 1.1rem;
+    padding: 10px 12px;
+    border: 0px solid #D5DBE6;
+    border-radius: 10px;
+  }
+   .hasil {
+    background: #F7C266;
+    text-align: center;
+  }
+  .hasil h2 { font-size: 2.2rem; margin: 4px 0; }
+  .gambar { margin: 16px 0 0; text-align: center; }
+.gambar img {
+  max-width: 100%;
+  height: auto;
+  border: 0px solid #D5DBE6;
+  border-radius: 14px;
+}
+</style>
+
+</head>
+<body>
+  <h1>Kalkulator Tusset Ag</h1>
+  <p>Masukkan rata-rata hasil XRF, 
+hasil langsung keluar yeyyyy</p>
+  
+  <div class="kartu">
+    <label for="au">Au rata-rata (%)</label>
+    <input id="au" type="number" step="any" placeholder="mis. 72.335">
+    
+    <label for="ag">Ag rata-rata (%)</label>
+    <input id="ag" type="number" step="any" placeholder="mis. 27.080">
+
+    <label for="w">Berat Sampel (mg)</label>
+    <input id="w" type="number" step="any" placeholder="250 mg/500 mg">
+  </div>
+
+  <div class="kartu hasil">
+    <p>Tusset Ag murni yang ditimbang</p>
+    <h2><span id="tus">-</span> mg</h2>
+  </div>
+
+  <main>
+   <figure class="gambar">
+  <img src="gambar/faiandfriends.png" alt="Rancangan antarmuka kalkulator tusset di Figma">
+</figure>
+  </main>
+
+
+<script>
+  function hitung() {
+    const au = parseFloat(document.getElementById("au").value);
+    const ag = parseFloat(document.getElementById("ag").value) || 0;
+    const beratIsi = parseFloat(document.getElementById("w").value);
+
+    if (isNaN(au)) {
+      document.getElementById("tus").textContent = "–";
+      return;
+    }
+
+    const beratOtomatis = au > 50 ? 250 : 500;
+    const berat = beratIsi > 0 ? beratIsi : beratOtomatis;
+    const tusset = Math.max(0, au/100*2.5*berat - ag/100*berat);
+    document.getElementById("tus").textContent = tusset.toFixed(2);
+  }
+
+  document.getElementById("au").addEventListener("input", hitung);
+  document.getElementById("ag").addEventListener("input", hitung);
+  document.getElementById("w").addEventListener("input", hitung);
+</script>
+</body>
+</html>
